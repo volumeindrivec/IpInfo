@@ -10,6 +10,7 @@
     foreach ($Ip in $IpAddress){
       try{
         $Content = (Invoke-WebRequest -Uri http://ipinfo.io/$Ip/json).Content | ConvertFrom-Json
+        $Content | Add-Member -MemberType NoteProperty -Name 'dateretrieved' -Value (Get-Date -Format s) 
         Write-Output $Content
       }
       catch{
@@ -21,6 +22,7 @@
   }
   else{
     $Content = (Invoke-WebRequest -Uri http://ipinfo.io).Content | ConvertFrom-Json
+    $Content | Add-Member -MemberType NoteProperty -Name 'dateretrieved' -Value (Get-Date -Format s)
     Write-Output $Content
   }
 }
